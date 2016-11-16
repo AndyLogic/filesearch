@@ -6,3 +6,5 @@ This App should be able to take a keyword and identify which files that keyword 
 Future Additions:
 
 * Keyword is looked for in file meta data
+
+*I MADE SO MANY CHANGES
