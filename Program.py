@@ -1,12 +1,16 @@
-import collections
+from User_Interface import *
 
 def main():
-    print(search_details()[1])
-
-def search_details():
-    search_history = collections.OrderedDict()
-    search_history[input("What keyword do you want to look for? ")] = input("What location do you wish to search? ")
-    return search_history
-
+  repeat = "Y"
+  User_Interface.title_bar("File Search")
+  
+  a = User_Interface()
+  while repeat.lower() == "y" or repeat.lower() == "yes":
+    a.request()
+    repeat = input("Would you like to search again?")
+  
+  print(a.search_history)
+  
+  
 if __name__ == '__main__':
     main()
