@@ -29,17 +29,26 @@ class FileSearch:
         dir_list = directories
         if recursive.lower() == "n" or recursive.lower() == "no":
             for obj in os.listdir(dir_list[0]):
-                os.chdir(dir_list[0])
+                try:
+                    os.chdir(dir_list[0])
+                except:
+                    continue
                 obj = os.path.abspath(obj)
                 if os.path.isfile(obj):
-                    file_list.append(obj)
+                    yield obj
         else:
             while len(dir_list) > 0:
                 folder = os.path.abspath(dir_list[0])
-                os.chdir(folder)
+                try:
+                    os.chdir(folder)
+                except:
+                    pass
                 dir_list.pop(0)
 
-                checklist = os.listdir(folder)
+                try:
+                    checklist = os.listdir(folder)
+                except:
+                    pass
 
                 while len(checklist) > 0:
                     obj = os.path.abspath(checklist[0])
@@ -48,9 +57,8 @@ class FileSearch:
                     if os.path.isdir(obj):
                         dir_list.append(obj)
                     else:
-                        file_list.append(obj)
+                      yield obj
 
-        return file_list
 
     def search_location(self):
         """
@@ -58,8 +66,7 @@ class FileSearch:
         :return matched_files: a list of files found to have the keyword
         """
         matched_files = []
-        files = self.files([self.location], input("Do you want to search through sub-folders? "))
-        for file in files:
+        for file in self.files([self.location], input("Do you want to search through sub-folders? ")):
             if re.search(self.keyword.lower(), os.path.basename(file).lower()):
                 matched_files.append(file)
 
